@@ -1,0 +1,7 @@
+---
+deployment:
+  tasks:
+    - export RAMO=$(git rev-parse --abbrev-ref HEAD)
+    - if [ "$RAMO" = "main" ]; then export SUB=consultas; elif [ "$RAMO" = "teste" ]; then export SUB=consultas-teste; else export SUB=; fi
+    - export DEST=; for d in $HOME/$SUB.amcontassessoria.com.br $HOME/public_html/$SUB.amcontassessoria.com.br $HOME/public_html/$SUB; do if [ -n "$SUB" ] && [ -z "$DEST" ] && [ -d "$d" ]; then export DEST=$d; fi; done
+    - if [ -n "$DEST" ]; then /bin/cp -f index.html amcont-produto.html amcont-cliente.html versao.json .htaccess "$DEST/"; fi
